@@ -13,7 +13,12 @@
             const trainingData = tf.data.csv(trainingUrl, {
                 
                 // YOUR CODE HERE
-                
+                trainingUrl, {
+                    columnConfigs: {
+                        diagnosis: {
+                            isLabel: true
+                        }
+                    }
             });
             
             // Convert the training data into arrays in the space below.
@@ -21,7 +26,9 @@
             // Therefore, there is no need to convert string labels into
             // a one-hot encoded array of label values like we did in the
             // Iris dataset example. 
-            const convertedTrainingData = // YOUR CODE HERE
+            const convertedTrainingData = trainingData.map(({xs, ys}) => {
+                return {xs:Object.values(xs), ys:Object.values(ys)};
+            }).batch(10);
                   
             const testingUrl = '/data/wdbc-test.csv';
             
@@ -32,7 +39,12 @@
             const testingData = tf.data.csv(testingUrl, {
                 
                 // YOUR CODE HERE
-                
+                testingUrl, {
+                    columnConfigs: {
+                        diagnosis: {
+                            isLabel: true
+                        }
+                    }
             });
             
             // Convert the testing data into arrays in the space below.
